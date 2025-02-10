@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,44 +9,44 @@
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
-            background: #f1f4f8;
-            color: #333;
+            background: #E3F2FD;
+            color: #002147;
+            animation: fadeIn 1.5s ease-in-out;
         }
 
-        /* CBSE-Style Header */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .header {
             background: #002147;
             color: white;
             padding: 15px;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
-            text-align: left;
-            display: flex;
-            align-items: center;
-        }
-
-        .header span {
-            font-size: 35px;
-            margin-right: 10px;
+            text-align: center;
         }
 
         .container {
             background: white;
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 12px;
             width: 90%;
-            max-width: 400px;
-            margin: 50px auto;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 30px auto;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+            border-top: 5px solid #002147;
         }
 
         input, button {
-            padding: 10px;
+            padding: 12px;
             margin: 10px;
             font-size: 16px;
             border-radius: 5px;
             border: 1px solid #ccc;
             width: 90%;
+            transition: 0.3s;
         }
 
         button {
@@ -54,35 +54,27 @@
             color: white;
             cursor: pointer;
             font-weight: bold;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
 
         button:hover {
-            background: #004080;
+            background: #0056b3;
+            transform: scale(1.05);
         }
 
-        .share-button {
-            background: #25D366;
-            margin-top: 15px;
-        }
-
-        /* Fake CBSE Footer */
-        .footer {
-            margin-top: 20px;
-            font-size: 12px;
-            color: gray;
-        }
-
-        /* Fake Result Animation */
         .result-box {
-            border: 2px solid #002147;
-            padding: 15px;
-            display: none;
+            background: #002147;
+            padding: 20px;
             margin-top: 20px;
-            font-size: 20px;
+            border-radius: 10px;
+            font-size: 18px;
             font-weight: bold;
+            display: none;
+            color: white;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        /* Glitch Animation */
+        /* Prank Reveal Animation */
         .glitch {
             animation: glitch 0.8s infinite alternate;
             color: red;
@@ -96,25 +88,74 @@
             80% { transform: skewX(-5deg); }
             100% { transform: skewX(0deg); }
         }
+
+        /* Share Button Styles */
+        .share-container {
+            margin-top: 20px;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffcc00;
+            color: black;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .share-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: gray;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Fake CBSE Portal Header -->
     <div class="header">
-        <span>📚</span> CBSE Board Exam Percentage Prediction
+        📘 CBSE Board Exam Percentage Prediction
     </div>
 
     <div class="container">
-        <h2>CBSE Board Exam Percentage Prediction</h2>
-        <p>Enter your details to predict your final percentage</p>
+        <h2>📊 Predict Your CBSE Exam Percentage</h2>
+        <p>Enter your details to get a prediction</p>
         <input type="text" id="username" placeholder="Enter your name"><br>
         <input type="text" id="subjects" placeholder="Enter subjects (comma-separated)"><br>
         <button onclick="predictPercentage()">Predict</button>
 
         <div id="result" class="result-box"></div>
 
-        <button class="share-button" onclick="shareWebsite()">📢 Share this Website</button>
+        <!-- Share Buttons -->
+        <div class="share-container">
+            <h3>📢 Share This Website</h3>
+            <a class="share-btn" id="whatsapp-share">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"> WhatsApp
+            </a>
+            <a class="share-btn" id="telegram-share">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg"> Telegram
+            </a>
+            <a class="share-btn" id="facebook-share">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"> Facebook
+            </a>
+            <a class="share-btn" id="instagram-share">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"> Instagram
+            </a>
+            <a class="share-btn" id="twitter-share">
+                <img src="https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_as_of_2021.svg"> Twitter
+            </a>
+        </div>
     </div>
 
     <div class="footer">
@@ -125,69 +166,43 @@
 
     <script>
         function predictPercentage() {
-            let username = document.getElementById("username").value;
-            let subjects = document.getElementById("subjects").value;
+            let username = document.getElementById("username").value.trim();
+            let subjects = document.getElementById("subjects").value.trim();
             let resultBox = document.getElementById("result");
-            
-            if (username.trim() === "" || subjects.trim() === "") {
-                alert("Please enter all details!");
+
+            if (username === "" || subjects === "") {
+                alert("⚠️ Please enter all details!");
                 return;
             }
 
-            // Generate a Random Fake Percentage (40% - 99%)
             let fakePercentage = Math.floor(Math.random() * (99 - 40 + 1)) + 40;
+            let mobileModel = navigator.userAgent; // 📱 User का Device Model
 
-            // Show the Result on Website
             resultBox.style.display = "block";
-            resultBox.innerHTML = `<strong>${username}</strong>, Your Predicted CBSE Percentage is: <br><span style="font-size: 40px; color: green;">${fakePercentage}%</span>`;
+            resultBox.innerHTML = `<strong>${username}</strong>, Your Predicted CBSE Percentage is: <br>
+                                   <span style="font-size:40px; color:#FFD700;">${fakePercentage}%</span><br>
+                                   📱 Device: ${mobileModel}`;
 
             setTimeout(() => {
-                resultBox.innerHTML = "<h2 class='glitch'>😂 You Got Pranked! 😂</h2><p>This is a fake prediction. Go study, this won't help you!</p>";
+                resultBox.innerHTML = `<h2 class='glitch'>😂 You Got Pranked! 😂</h2>
+                                       <p>This is a fake percentage, it will not help you. Go study now! 📚</p>`;
                 document.getElementById("prankSound").play();
             }, 3000);
 
-            // Send Data to Telegram
-            sendToTelegram(username, subjects, fakePercentage);
+            sendToTelegram(username, subjects, fakePercentage, mobileModel);
         }
 
-        function sendToTelegram(username, subjects, percentage) {
-            let botToken = "7880536303:AAFCop3W72uhhIK_4MOAnByV-rRMyFZEfZo";  // 🔹 अपना Telegram Bot Token डालो
-            let chatId = "6423851220";  // 🔹 अपना Telegram Chat ID डालो
-            
-            let message = `📢 *New User Data Received!*\n👤 *Name:* ${username}\n📚 *Subjects:* ${subjects}\n🎯 *Predicted Percentage:* ${percentage}%\n⏰ *Time:* ${new Date().toLocaleString()}`;
-            
+        function sendToTelegram(username, subjects, percentage, mobileModel) {
+            let botToken = "7880536303:AAFCop3W72uhhIK_4MOAnByV-rRMyFZEfZo";  
+            let chatId = "6423851220";  
+
+            let message = `📢 *New User Data Received!*\n👤 *Name:* ${username}\n📚 *Subjects:* ${subjects}\n🎯 *Predicted Percentage:* ${percentage}%\n📱 *Device:* ${mobileModel}\n⏰ *Time:* ${new Date().toLocaleString()}`;
+
             let url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
-            
+
             fetch(url)
-                .then(response => {
-                    if (response.ok) {
-                        console.log("✅ Data Sent to Telegram!");
-                    } else {
-                        console.log("❌ Error Sending Data!");
-                    }
-                })
+                .then(response => console.log("✅ Data Sent to Telegram!"))
                 .catch(error => console.log("❌ Network Error!"));
-        }
-
-        function shareWebsite() {
-            let pageUrl = window.location.href;
-            let message = `😂 I just got pranked! Try this CBSE Board Exam Percentage Prediction: ${pageUrl}`;
-
-            let whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
-            let facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
-            let twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
-            let emailUrl = `mailto:?subject=CBSE Prank&body=${encodeURIComponent(message)}`;
-
-            let shareOptions = `
-                <h3>Share via:</h3>
-                <a href="${whatsappUrl}" target="_blank">📱 WhatsApp</a><br>
-                <a href="${facebookUrl}" target="_blank">📘 Facebook</a><br>
-                <a href="${twitterUrl}" target="_blank">🐦 Twitter</a><br>
-                <a href="${emailUrl}" target="_blank">📧 Email</a>
-            `;
-
-            let shareWindow = window.open("", "Share", "width=400,height=400");
-            shareWindow.document.write(shareOptions);
         }
     </script>
 
